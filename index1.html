@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>TODO LIST</title>
+	<meta name="description" content="Organize your day">
+  	<meta name="keywords" content="Organizer, todo, list, time">
+  	<meta name="author" content="IFeel3">
+  	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="./css/custom-bootstrap.css">
+	<link href="https://fonts.googleapis.com/css?family=Knewave" rel="stylesheet">
+</head>
+
+<body>
+
+	<div class="page-header">
+		<h1>To-Do List</h1>
+	</div>
+
+	<div class="jumbotron main">
+		<div class="input-group">
+			<span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+			<input type="text" class="form-control" id="inputer" placeholder="Add task to do!" aria-describedby="sizing-addon2">
+		</div>
+
+		<ul class="task-list">
+			<li class="task">1. Task1</li>
+		</ul>
+	</div>
+
+	<p>// TODO: usprawnic numeracje (poprawianie na biezaco przy usuwaniu elementow)</p>
+
+	<script src="./js/jquery/jquery-3.1.1.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script>
+		$(document).ready(function() {
+			var counter = 1;
+			var tasks = new Array();
+
+			function decrement_task_index(task_text) {
+				var index_position = 18; // position at which index number occurs in html task code
+				var decremented_index = parseInt(task_text.charAt(index_position)) - 1;
+				return task_text.slice(0, 18) + decremented_index + task_text.slice(19);
+			}
+
+			document.write(decrement_task_index("<li class='task'>1. Task1</li>"));
+
+			$("#inputer").keypress(function(e) {
+				if (e.which == 13) { // if eneter pressed
+					var input_value = $(this).val();
+					$(this).val(''); // clear the input
+					tasks.push({index: counter, value: input_value});
+					$(".task-list").append("<li class='task'>" + counter + ". " + input_value + "</li>"); // add task to display
+					counter++;
+
+				}
+			});
+			$(".task-list").on("click", ".task", function() {
+				$(this).slideToggle(100, function() {
+					$(this).remove();
+					counter--;
+				});
+			});
+			$(".task-list").on("mouseover", ".task", function() {
+				$(this).css("text-decoration", "line-through");
+				$(this).css("cursor", "pointer");
+			});
+			$(".task-list").on("mouseout", ".task", function() {
+				$(this).css("text-decoration", "none");
+			});
+
+		});
+	</script>
+</body>
+</html>
